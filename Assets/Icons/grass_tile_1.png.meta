@@ -1,0 +1,245 @@
+fileFormatVersion: 2
+guid: 47c91bc0432c145428a108e3ff28d0d8
+timeCreated: 1519334107
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: grass_tile_1_0
+    21300002: grass_tile_1_1
+    21300004: grass_tile_1_2
+    21300006: grass_tile_1_3
+    21300008: grass_tile_1_4
+    21300010: grass_tile_1_5
+    21300012: grass_tile_1_6
+    21300014: grass_tile_1_7
+    21300016: grass_tile_1_8
+    21300018: grass_tile_1_9
+    21300020: grass_tile_1_10
+    21300022: grass_tile_1_11
+    21300024: grass_tile_1_12
+    21300026: grass_tile_1_13
+    21300028: grass_tile_1_14
+    21300030: grass_tile_1_15
+    21300032: grass_tile_1_16
+    21300034: grass_tile_1_17
+    21300036: grass_tile_1_18
+    21300038: grass_tile_1_19
+    21300040: grass_tile_1_20
+    21300042: grass_tile_1_21
+    21300044: grass_tile_1_22
+    21300046: grass_tile_1_23
+    21300048: grass_tile_1_24
+    21300050: grass_tile_1_25
+    21300052: grass_tile_1_26
+    21300054: grass_tile_1_27
+    21300056: grass_tile_1_28
+    21300058: grass_tile_1_29
+    21300060: grass_tile_1_30
+    21300062: grass_tile_1_31
+    21300064: grass_tile_1_32
+    21300066: grass_tile_1_33
+    21300068: grass_tile_1_34
+    21300070: grass_tile_1_35
+    21300072: grass_tile_1_36
+    21300074: grass_tile_1_37
+    21300076: grass_tile_1_38
+    21300078: grass_tile_1_39
+    21300080: grass_tile_1_40
+    21300082: grass_tile_1_41
+    21300084: grass_tile_1_42
+    21300086: grass_tile_1_43
+    21300088: grass_tile_1_44
+    21300090: grass_tile_1_45
+    21300092: grass_tile_1_46
+    21300094: grass_tile_1_47
+    21300096: grass_tile_1_48
+    21300098: grass_tile_1_49
+    21300100: grass_tile_1_50
+    21300102: grass_tile_1_51
+    21300104: grass_tile_1_52
+    21300106: grass_tile_1_53
+    21300108: grass_tile_1_54
+    21300110: grass_tile_1_55
+    21300112: grass_tile_1_56
+    21300114: grass_tile_1_57
+    21300116: grass_tile_1_58
+    21300118: grass_tile_1_59
+    21300120: grass_tile_1_60
+    21300122: grass_tile_1_61
+    21300124: grass_tile_1_62
+    21300126: grass_tile_1_63
+    21300128: grass_tile_1_64
+    21300130: grass_tile_1_65
+    21300132: grass_tile_1_66
+    21300134: grass_tile_1_67
+    21300136: grass_tile_1_68
+    21300138: grass_tile_1_69
+    21300140: grass_tile_1_70
+    21300142: grass_tile_1_71
+    21300144: grass_tile_1_72
+    21300146: grass_tile_1_73
+    21300148: grass_tile_1_74
+    21300150: grass_tile_1_75
+    21300152: grass_tile_1_76
+    21300154: grass_tile_1_77
+    21300156: grass_tile_1_78
+    21300158: grass_tile_1_79
+    21300160: grass_tile_1_80
+    21300162: grass_tile_1_81
+    21300164: grass_tile_1_82
+    21300166: grass_tile_1_83
+    21300168: grass_tile_1_84
+    21300170: grass_tile_1_85
+    21300172: grass_tile_1_86
+    21300174: grass_tile_1_87
+    21300176: grass_tile_1_88
+    21300178: grass_tile_1_89
+    21300180: grass_tile_1_90
+    21300182: grass_tile_1_91
+    21300184: grass_tile_1_92
+    21300186: grass_tile_1_93
+    21300188: grass_tile_1_94
+    21300190: grass_tile_1_95
+    21300192: grass_tile_1_96
+    21300194: grass_tile_1_97
+    21300196: grass_tile_1_98
+    21300198: grass_tile_1_99
+    21300200: grass_tile_1_100
+    21300202: grass_tile_1_101
+    21300204: grass_tile_1_102
+    21300206: grass_tile_1_103
+    21300208: grass_tile_1_104
+    21300210: grass_tile_1_105
+    21300212: grass_tile_1_106
+    21300214: grass_tile_1_107
+    21300216: grass_tile_1_108
+    21300218: grass_tile_1_109
+    21300220: grass_tile_1_110
+    21300222: grass_tile_1_111
+    21300224: grass_tile_1_112
+    21300226: grass_tile_1_113
+    21300228: grass_tile_1_114
+    21300230: grass_tile_1_115
+    21300232: grass_tile_1_116
+    21300234: grass_tile_1_117
+    21300236: grass_tile_1_118
+    21300238: grass_tile_1_119
+    21300240: grass_tile_1_120
+    21300242: grass_tile_1_121
+    21300244: grass_tile_1_122
+    21300246: grass_tile_1_123
+    21300248: grass_tile_1_124
+    21300250: grass_tile_1_125
+    21300252: grass_tile_1_126
+    21300254: grass_tile_1_127
+    21300256: grass_tile_1_128
+    21300258: grass_tile_1_129
+    21300260: grass_tile_1_130
+    21300262: grass_tile_1_131
+    21300264: grass_tile_1_132
+    21300266: grass_tile_1_133
+    21300268: grass_tile_1_134
+    21300270: grass_tile_1_135
+    21300272: grass_tile_1_136
+    21300274: grass_tile_1_137
+    21300276: grass_tile_1_138
+    21300278: grass_tile_1_139
+    21300280: grass_tile_1_140
+    21300282: grass_tile_1_141
+    21300284: grass_tile_1_142
+    21300286: grass_tile_1_143
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 1024
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: grass_tile_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
