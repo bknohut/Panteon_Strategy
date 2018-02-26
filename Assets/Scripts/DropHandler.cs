@@ -3,25 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DropHandler : MonoBehaviour, IDropHandler
+public class DropHandler : MonoBehaviour//, IDropHandler
 {
-    public GameObject item
+    private GameObject item;
+    private Color defaultColor;
+    private SpriteRenderer tileRenderer;
+
+    private void Start()
     {
-        get
-        {
-            if ( transform.childCount > 0 )
-            {
-                return transform.GetChild(0).gameObject;
-            }
-            return null;
-        }
+        tileRenderer = transform.GetComponent<SpriteRenderer>();
+        defaultColor = tileRenderer.color;
     }
-	
-    public void OnDrop( PointerEventData eventData )
+    private void OnMouseOver()
     {
+        tileRenderer.color = Color.black;
+    }
+    private void OnMouseExit()
+    {
+        tileRenderer.color = defaultColor;
+    }
+
+   /*public void OnDrop( PointerEventData eventData )
+    {
+        Debug.Log("sad");
+        if ( transform.childCount == 0)
+        {
+            return;
+        }
+        else
+        {
+            item = transform.GetChild(0).gameObject;
+        }
         if ( !item )
         {
             DragHandler.draggedObject.transform.SetParent(transform);
         }
-    }
+    }*/
 }

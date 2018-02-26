@@ -7,6 +7,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 {
 
     public static GameObject draggedObject;
+    public GameObject box;
     private Vector3 startPos;
     private Transform initialParent;
 
@@ -15,7 +16,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         draggedObject = gameObject;
         startPos = transform.position;
         initialParent = transform.parent;
-        //GetComponent<CanvasGroup>().blocksRaycasts = false;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -24,13 +25,24 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        RaycastHit hit = new RaycastHit();
+        Ray ray = Camera.main.ScreenPointToRay(transform.position);
+        if( Physics.Raycast(ray, out hit))
+        {
+            Instantiate(box, hit.point, box.transform.rotation);
+            
+            Debug.Log(hit.point);
+        }
+
         draggedObject = null;
-        //GetComponent<CanvasGroup>().blocksRaycasts = true;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        
         if ( transform.parent == initialParent )
         {
             transform.position = startPos;
 
         }
+        
     }
 
 
