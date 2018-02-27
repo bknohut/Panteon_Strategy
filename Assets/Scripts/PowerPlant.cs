@@ -6,9 +6,9 @@ public class PowerPlant : Building
 {
 
     // Use this for initialization
-    void Start ()
+    protected override void Start()
     {
-        splash = transform.GetComponent<SpriteRenderer>().sprite;
+       // splash = transform.GetComponent<SpriteRenderer>().sprite;
     }
     protected override void OnMouseDown()
     {

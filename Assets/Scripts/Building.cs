@@ -2,29 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Building : MonoBehaviour {
+public class Building : MonoBehaviour
+{
 
     // Use this for initialization
 
     protected Sprite splash;
-    public Image information;
-    public Text buildingName;
-    public Button spawn;
+    protected Image information;
+    protected Text buildingName;
+    protected Button spawn;
 
-	void Start ()
+    protected virtual void Start()
     {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
+        information = GameManager.instance.informationImage;
+        buildingName = GameManager.instance.informationText;
+        spawn = GameManager.instance.spawn;
+    }
     protected virtual void OnMouseDown()
     {
+        Debug.Log("sdaş");
         information.gameObject.SetActive(true);
         information.sprite = splash;
     }
+    
 }

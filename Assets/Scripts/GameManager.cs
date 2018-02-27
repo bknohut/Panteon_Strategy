@@ -1,18 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
 
     public static GameManager instance;
+    public GameObject[] tilemap;
     public GameObject tiles;
     public GameObject tile;
-    public GameObject barracks;
-    public GameObject powerplant;
+
+    public Image informationImage;
+    public Button spawn;
+    public Text informationText;
 
     private Vector3 mousePos;
     private Vector3 tilePos;
+    
 
     private void Awake()
     {
@@ -23,30 +28,28 @@ public class GameManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(this.gameObject);
+        tilemap = new GameObject[390];
         tilePos = new Vector3( -4.814f, 2.627f, 0f);
 
-        for ( int i = 0; i < 26; i++ )
-        {
-            tilePos.y = 2.627f;
-            for( int y = 0; y < 15; y++ )
+        int tileId = 0;
+        for( int j = 0; j < 15; j++ )
+        {   
+            for ( int i = 0; i < 26; i++ )
             {
                 GameObject tmpTile = Instantiate(tile, tiles.transform);
-                tilePos.y += 0.39f;
+                tilePos.x += 0.39f;
                 tmpTile.transform.position = tilePos;
+                tilemap[tileId] = tmpTile;
+                tmpTile.GetComponent<Ground>().id = tileId++;
+
             }
-            tilePos.x += 0.39f;
+            tilePos.y += 0.39f;
+            tilePos.x = -4.814f;
+
         }
-
-
+        Camera.main.transform.LookAt(tilemap[194].transform);
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            GameObject tmpBuilding = Instantiate(barracks);
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            tmpBuilding.transform.position = Vector2.Lerp(tmpBuilding.transform.position, mousePos, 0.1f * Time.deltaTime);
-
-        }
     }
 }
