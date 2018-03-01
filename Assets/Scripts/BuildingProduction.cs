@@ -10,16 +10,17 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     private Vector3 startPos;
     private Transform initialParent;
-    private GameObject[] constructionArea;
+    private List<SpriteRenderer> coloredTiles;
+    private GameObject initialTile;
     private bool isConstructable;
+    private int constructableTileCount;
 
     protected GameObject building;
-    protected int constructionSize;
-    
-    
+    protected Vector2 constructionSize;
+
     public virtual void Start()
     {
-        constructionArea = new GameObject[constructionSize];
+        coloredTiles = new List<SpriteRenderer>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -32,139 +33,62 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
   
     public void OnDrag(PointerEventData eventData)
     {   
-        // clear selection
-        foreach (GameObject tile in constructionArea)
-        {   
-            if( tile != null)
-            {
-                tile.GetComponent<Ground>().StartCoroutine("ChangeToDefaultColor");
-            }
-        }
-
         transform.position = Input.mousePosition;
         RaycastHit hit = new RaycastHit();
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        // upleftcornerid
-        int constructionStartIndex;
-        // occupation
-        isConstructable = true;
+        foreach (SpriteRenderer spriteRenderer in coloredTiles)
+        {
+            spriteRenderer.color = Color.white;
+        }
 
-        if ( Physics.Raycast(ray, out hit ))
-        {   
-            if ( hit.transform.gameObject.name != "grass_tile(Clone)")
-            {
-                StartCoroutine("ObstacleWarning");
-                isConstructable = false;
-                for ( int i = 0; i < constructionSize; i++ )
-                {
-                    constructionArea[i] = null;
-                }
-                return;
-            }
-            // id of leftmost tile
-            constructionStartIndex = hit.transform.gameObject.GetComponent<Ground>().id;
-            
-            // barracks
-            if( constructionSize == 16 )
-            {
-                if (constructionStartIndex >= 297)
-                {
-                    return;
-                }
-                int k, index = 0;
-                GameObject[] tileMap = GameManager.instance.tilemap;
-                for ( int j = 0; j < 4; j++ )
-                {   
-                    k = constructionStartIndex + j * 26;
-                    for ( int i = 0; i < 4; i++ )
-                    {
-                        if( tileMap[k] != null )
-                        {   
-                            if(tileMap[k].GetComponent<Ground>().constructionEnable == false )
-                            {
-                                isConstructable = false;
-                            }
-                            constructionArea[index++] = tileMap[k++];
-                            
-                        }
-                    }
-                }
+        if (Physics.Raycast(ray, out hit))
+        {
+            initialTile = hit.transform.gameObject;
+            List<List<GameObject>> chosenGrids = decideGrid(constructionSize, hit.transform.gameObject.GetComponent<Ground>().index);
+            coloredTiles = new List<SpriteRenderer>();
+            constructableTileCount = chosenGrids[0].Count;
 
-            }
-            // powerplant
-            else if ( constructionSize == 6)
+            foreach ( GameObject tile in chosenGrids[0])
             {
-                if (constructionStartIndex >= 323)
-                {
-                    return;
-                }
-                int k, index = 0;
-                GameObject[] tileMap = GameManager.instance.tilemap;
-                for (int j = 0; j < 3; j++)
-                {
-                    k = constructionStartIndex + j * 26;
-                    for (int i = 0; i < 2; i++)
-                    {
-                        if (tileMap[k] != null)
-                        {
-                            if (tileMap[k].GetComponent<Ground>().constructionEnable == false)
-                            {
-                                isConstructable = false;
-                            }
-                            constructionArea[index++] = tileMap[k++];
-                        }
-                    }
-                }
+                tile.GetComponent<SpriteRenderer>().color = Color.blue;
+                coloredTiles.Add(tile.GetComponent<SpriteRenderer>());
             }
-            foreach (GameObject tile in constructionArea)
+            foreach (GameObject tile in chosenGrids[1])
             {
-                if (tile != null)
-                {
-                    if (isConstructable == true)
-                    {
-                        tile.GetComponent<Ground>().StartCoroutine("Select");
-                    }
-                    else
-                    {
-                        tile.GetComponent<Ground>().StartCoroutine("Warning");
-                    }
-                }
+                tile.GetComponent<SpriteRenderer>().color = Color.red;
+                coloredTiles.Add(tile.GetComponent<SpriteRenderer>());
             }
         }
         
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (isConstructable == false)
-        {
-            StartCoroutine("RejectConstruction");
-        }
-        else
-        {
-            foreach (GameObject tile in constructionArea)
-            {
-                tile.GetComponent<Ground>().StartCoroutine("ChangeToDefaultColor");
-            }
-            if (constructionSize == 16)
-            {
-                Vector3 buildingPosition = constructionArea[0].transform.position;
-                buildingPosition.x += 0.57f;
-                buildingPosition.y += 0.58f;
-                Instantiate(building).transform.position = buildingPosition;
-            }
-            else if (constructionSize == 6)
-            {
-                Vector3 buildingPosition = constructionArea[0].transform.position;
-                buildingPosition.x += 0.1875f;
-                buildingPosition.y += 0.4f;
-                Instantiate(building).transform.position = buildingPosition;
-            }
+        List<GameObject> chosenGrids = getGrid(constructionSize, initialTile.GetComponent<Ground>().index);
 
-            foreach (GameObject tile in constructionArea)
+        if (constructableTileCount == constructionSize.x * constructionSize.y)
+        {
+            foreach( GameObject tile in chosenGrids )
             {
                 tile.GetComponent<Ground>().constructionEnable = false;
             }
+
+            Instantiate(building, initialTile.transform.position, initialTile.transform.rotation);
+
+
+
         }
+        else
+        {
+            foreach (GameObject tile in chosenGrids)
+            {
+                tile.GetComponent<Ground>().StartCoroutine("FlashWarning");
+            }
+        }
+        foreach (SpriteRenderer spriteRenderer in coloredTiles)
+        {
+            spriteRenderer.color = Color.white;
+        }
+
 
         draggedObject = null;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -176,19 +100,65 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
         }
         
     }
-    IEnumerator ObstacleWarning()
+
+    private List<List<GameObject>> decideGrid( Vector2 size, Vector2 tileLocation )
     {
-        yield return null;
-    }
-    IEnumerator RejectConstruction()
-    {   
-        yield return null;
-        foreach( GameObject tile in constructionArea )
+        List<List<GameObject>> result = new List<List<GameObject>>();
+        result.Add(new List<GameObject>());
+        result.Add(new List<GameObject>());
+
+        for ( int i = (int)tileLocation.x; i < tileLocation.x+size.x; i++ )
         {   
-            if( tile != null )
+            for ( int j = (int)tileLocation.y; j < tileLocation.y+size.y; j++ )
             {
-                tile.GetComponent<Ground>().StartCoroutine("FlashWarning");
+                Debug.Log(i + " " + j);
+                if( !isGridAvailable(i, j) )
+                {
+                    continue;
+                }
+                // select
+                if( GameManager.instance.tilemap[i,j].GetComponent<Ground>().constructionEnable )
+                {
+                    result[0].Add(GameManager.instance.tilemap[i, j]);
+                }
+                // reject
+                else
+                {
+                    result[1].Add(GameManager.instance.tilemap[i, j]);
+                }
             }
         }
+        return result;
+    }
+    private List<GameObject> getGrid(Vector2 size, Vector2 tileLocation)
+    {
+        List<GameObject> result = new List<GameObject>();
+
+        for (int i = (int)tileLocation.x; i < tileLocation.x + size.x; i++)
+        {
+            for (int j = (int)tileLocation.y; j < tileLocation.y + size.y; j++)
+            {
+                if (!isGridAvailable(i, j))
+                {
+                    continue;
+                }
+                result.Add(GameManager.instance.tilemap[i, j]);
+            }
+        }
+        return result;
+    }
+
+
+    private bool isGridAvailable( int i, int j )
+    {   
+        if ( i >= GameManager.instance.gridWidth || j >= GameManager.instance.gridHeight )
+        {
+            return false;
+        }
+        else if(i < 0 || j < 0 )
+        {
+            return false;
+        }
+        return true;
     }
 }

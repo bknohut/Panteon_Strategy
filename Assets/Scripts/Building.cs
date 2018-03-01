@@ -7,12 +7,13 @@ using UnityEngine.EventSystems;
 public class Building : MonoBehaviour
 {
 
-    // Use this for initialization
+    public Vector2 downLeftTileIndex;
 
     protected Sprite splash;
     protected Image information;
     protected Text buildingName;
     protected Button spawn;
+
 
     protected virtual void Start()
     {
@@ -22,7 +23,6 @@ public class Building : MonoBehaviour
     }
     protected virtual void OnMouseDown()
     {
-        Debug.Log("sdaş");
         information.gameObject.SetActive(true);
         information.sprite = splash;
     }

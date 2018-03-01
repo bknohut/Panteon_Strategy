@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Ground : MonoBehaviour
 {
-    public int id;
+    public Vector2 index;
     public bool constructionEnable = true;
 
     private Color defaultColor;

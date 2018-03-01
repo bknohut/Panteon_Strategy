@@ -163,7 +163,7 @@ Prefab:
     - target: {fileID: 224374315455855558, guid: 197d20dcc467fc740966d9254afe4512,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 779.5
+      value: 781.3
       objectReference: {fileID: 0}
     - target: {fileID: 224374315455855558, guid: 197d20dcc467fc740966d9254afe4512,
         type: 2}
@@ -173,7 +173,7 @@ Prefab:
     - target: {fileID: 224374315455855558, guid: 197d20dcc467fc740966d9254afe4512,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: -135.6
+      value: -152.8
       objectReference: {fileID: 0}
     - target: {fileID: 224374315455855558, guid: 197d20dcc467fc740966d9254afe4512,
         type: 2}
@@ -276,7 +276,7 @@ Prefab:
     - target: {fileID: 224316106460827414, guid: d262b4bfcaaa8fe4bace793c794b2eac,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -719.8
+      value: -711
       objectReference: {fileID: 0}
     - target: {fileID: 224316106460827414, guid: d262b4bfcaaa8fe4bace793c794b2eac,
         type: 2}
@@ -286,7 +286,7 @@ Prefab:
     - target: {fileID: 224316106460827414, guid: d262b4bfcaaa8fe4bace793c794b2eac,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 480.3
+      value: 484.9
       objectReference: {fileID: 0}
     - target: {fileID: 224316106460827414, guid: d262b4bfcaaa8fe4bace793c794b2eac,
         type: 2}
@@ -331,7 +331,7 @@ Prefab:
     - target: {fileID: 224577403084281472, guid: d262b4bfcaaa8fe4bace793c794b2eac,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.7675868
+      value: 0.48085484
       objectReference: {fileID: 0}
     - target: {fileID: 224400970430593756, guid: d262b4bfcaaa8fe4bace793c794b2eac,
         type: 2}
@@ -361,18 +361,90 @@ Prefab:
     - target: {fileID: 224400970430593756, guid: d262b4bfcaaa8fe4bace793c794b2eac,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -320
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224400970430593756, guid: d262b4bfcaaa8fe4bace793c794b2eac,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224577403084281472, guid: d262b4bfcaaa8fe4bace793c794b2eac,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.28673196
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114308120021697620, guid: d262b4bfcaaa8fe4bace793c794b2eac,
+        type: 2}
+      propertyPath: barracks
+      value: 
+      objectReference: {fileID: 1096797648939180, guid: 0bddc6adb4fbdf94ca82a32b8d566de3,
+        type: 2}
+    - target: {fileID: 114772250130657620, guid: d262b4bfcaaa8fe4bace793c794b2eac,
+        type: 2}
+      propertyPath: powerplant
+      value: 
+      objectReference: {fileID: 1259208766595570, guid: 1f9ee28f4f673f147bbabc451a74cf09,
+        type: 2}
+    - target: {fileID: 114036316688126748, guid: d262b4bfcaaa8fe4bace793c794b2eac,
+        type: 2}
+      propertyPath: barracks
+      value: 
+      objectReference: {fileID: 1096797648939180, guid: 0bddc6adb4fbdf94ca82a32b8d566de3,
+        type: 2}
+    - target: {fileID: 114286093197193022, guid: d262b4bfcaaa8fe4bace793c794b2eac,
+        type: 2}
+      propertyPath: powerplant
+      value: 
+      objectReference: {fileID: 1259208766595570, guid: 1f9ee28f4f673f147bbabc451a74cf09,
+        type: 2}
+    - target: {fileID: 114236877870467770, guid: d262b4bfcaaa8fe4bace793c794b2eac,
+        type: 2}
+      propertyPath: barracks
+      value: 
+      objectReference: {fileID: 1096797648939180, guid: 0bddc6adb4fbdf94ca82a32b8d566de3,
+        type: 2}
+    - target: {fileID: 114564162964351826, guid: d262b4bfcaaa8fe4bace793c794b2eac,
+        type: 2}
+      propertyPath: powerplant
+      value: 
+      objectReference: {fileID: 1259208766595570, guid: 1f9ee28f4f673f147bbabc451a74cf09,
+        type: 2}
+    - target: {fileID: 114953153103050370, guid: d262b4bfcaaa8fe4bace793c794b2eac,
+        type: 2}
+      propertyPath: barracks
+      value: 
+      objectReference: {fileID: 1096797648939180, guid: 0bddc6adb4fbdf94ca82a32b8d566de3,
+        type: 2}
+    - target: {fileID: 114473147505985322, guid: d262b4bfcaaa8fe4bace793c794b2eac,
+        type: 2}
+      propertyPath: powerplant
+      value: 
+      objectReference: {fileID: 1259208766595570, guid: 1f9ee28f4f673f147bbabc451a74cf09,
+        type: 2}
+    - target: {fileID: 114489365708253396, guid: d262b4bfcaaa8fe4bace793c794b2eac,
+        type: 2}
+      propertyPath: barracks
+      value: 
+      objectReference: {fileID: 1096797648939180, guid: 0bddc6adb4fbdf94ca82a32b8d566de3,
+        type: 2}
+    - target: {fileID: 114854880418900136, guid: d262b4bfcaaa8fe4bace793c794b2eac,
+        type: 2}
+      propertyPath: powerplant
+      value: 
+      objectReference: {fileID: 1259208766595570, guid: 1f9ee28f4f673f147bbabc451a74cf09,
+        type: 2}
+    - target: {fileID: 114509042837801970, guid: d262b4bfcaaa8fe4bace793c794b2eac,
+        type: 2}
+      propertyPath: barracks
+      value: 
+      objectReference: {fileID: 1096797648939180, guid: 0bddc6adb4fbdf94ca82a32b8d566de3,
+        type: 2}
+    - target: {fileID: 114368673974884432, guid: d262b4bfcaaa8fe4bace793c794b2eac,
+        type: 2}
+      propertyPath: powerplant
+      value: 
+      objectReference: {fileID: 1259208766595570, guid: 1f9ee28f4f673f147bbabc451a74cf09,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d262b4bfcaaa8fe4bace793c794b2eac, type: 2}
   m_IsPrefabParent: 0
@@ -434,7 +506,7 @@ Camera:
   far clip plane: 1000
   field of view: 58.64761
   orthographic: 1
-  orthographic size: 2.8212461
+  orthographic size: 2.932635
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -457,7 +529,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1014926775}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.82, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -518,12 +590,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b228772b93577b648b1542ef649c4c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: []
   tiles: {fileID: 1038645355}
   tile: {fileID: 1037060427942686, guid: decf9c59785337f4a813ce45795daf02, type: 2}
   informationImage: {fileID: 707458179}
   spawn: {fileID: 2108240371}
   informationText: {fileID: 1201627035}
+  gridHeight: 15
+  gridWidth: 15
 --- !u!4 &1184537771
 Transform:
   m_ObjectHideFlags: 0

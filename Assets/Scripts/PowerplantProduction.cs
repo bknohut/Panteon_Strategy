@@ -5,8 +5,8 @@ public class PowerplantProduction : BuildingProduction
 {
     public GameObject powerplant;
     public override void Start()
-    {
-        constructionSize = 6;
+    {   
+        constructionSize = new Vector2(2,3);
         base.Start();
         building = powerplant;
     }

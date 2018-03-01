@@ -7,7 +7,7 @@ public class BarracksProduction : BuildingProduction
     // Use this for initialization
     public override void Start()
     {
-        constructionSize = 16;
+        constructionSize = new Vector2(4,4);
         base.Start();
         building = barracks;
     }
