@@ -5,11 +5,17 @@ using UnityEngine;
 public class SpawnButton : MonoBehaviour
 {
     public GameObject tank;
-    public Transform spawnLocation;
-
+    public GameObject spawnerBarracks;
+    
     public void Spawn()
     {
-        Instantiate(tank, spawnLocation.position, spawnLocation.rotation);
+        GameObject spawnLocation = spawnerBarracks.GetComponent<Barracks>().getSpawnLocation();
+        if( spawnLocation == null )
+        {
+            return;
+        }
+        Instantiate(tank, spawnLocation.transform.position, spawnLocation.transform.rotation);
+        spawnLocation.GetComponent<Ground>().isFree = false;
     }
 
 }

@@ -8,6 +8,9 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     public static GameObject draggedObject;
 
+    protected GameObject building;
+    protected Vector2 constructionSize;
+
     private Vector3 startPos;
     private Transform initialParent;
     private List<SpriteRenderer> coloredTiles;
@@ -15,8 +18,7 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
     private bool isConstructable;
     private int constructableTileCount;
 
-    protected GameObject building;
-    protected Vector2 constructionSize;
+    
 
     public virtual void Start()
     {
@@ -43,6 +45,12 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
 
         if (Physics.Raycast(ray, out hit))
         {
+            if( hit.transform.gameObject.tag != "Grass")
+            {
+                IEnumerator coroutine = BuildingWarning(hit.transform.GetChild(0).GetComponent<SpriteRenderer>());
+                StartCoroutine(coroutine);
+                return;
+            }
             initialTile = hit.transform.gameObject;
             List<List<GameObject>> chosenGrids = decideGrid(constructionSize, hit.transform.gameObject.GetComponent<Ground>().index);
             coloredTiles = new List<SpriteRenderer>();
@@ -69,11 +77,11 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
         {
             foreach( GameObject tile in chosenGrids )
             {
-                tile.GetComponent<Ground>().constructionEnable = false;
+                tile.GetComponent<Ground>().isFree = false;
             }
 
-            Instantiate(building, initialTile.transform.position, initialTile.transform.rotation);
-
+            GameObject tmp = Instantiate(building, initialTile.transform.position, initialTile.transform.rotation);
+            tmp.GetComponent<Building>().downLeftTileIndex = initialTile.GetComponent<Ground>().index;
 
 
         }
@@ -111,13 +119,12 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
         {   
             for ( int j = (int)tileLocation.y; j < tileLocation.y+size.y; j++ )
             {
-                Debug.Log(i + " " + j);
                 if( !isGridAvailable(i, j) )
                 {
                     continue;
                 }
                 // select
-                if( GameManager.instance.tilemap[i,j].GetComponent<Ground>().constructionEnable )
+                if( GameManager.instance.tilemap[i,j].GetComponent<Ground>().isFree )
                 {
                     result[0].Add(GameManager.instance.tilemap[i, j]);
                 }
@@ -160,5 +167,16 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
             return false;
         }
         return true;
+    }
+
+    IEnumerator BuildingWarning( SpriteRenderer spriteRenderer)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            yield return new WaitForSeconds(0.1f);
+            spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            spriteRenderer.color = Color.white;         
+        }
     }
 }

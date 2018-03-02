@@ -292,7 +292,6 @@
     <Compile Include="Assets\Scripts\PowerPlant.cs" />
     <Compile Include="Assets\Scripts\PowerplantProduction.cs" />
     <Compile Include="Assets\Scripts\SpawnButton.cs" />
-    <Compile Include="Assets\Scripts\TemplateBuilding.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

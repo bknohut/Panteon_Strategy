@@ -22,10 +22,9 @@ GameObject:
   - component: {fileID: 212872660621224500}
   - component: {fileID: 114136793528586336}
   - component: {fileID: 65957612329651460}
-  - component: {fileID: 54977101797963122}
   m_Layer: 0
   m_Name: grass_tile
-  m_TagString: Untagged
+  m_TagString: Grass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,21 +42,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &54977101797963122
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1037060427942686}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &65957612329651460
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -81,7 +65,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51a0c7978b747d3469c41cf359087e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  constructionEnable: 1
+  index: {x: 0, y: 0}
+  isFree: 1
 --- !u!212 &212872660621224500
 SpriteRenderer:
   m_ObjectHideFlags: 1
