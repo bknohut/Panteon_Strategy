@@ -45,34 +45,43 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
 
         if (Physics.Raycast(ray, out hit))
         {
-            if( hit.transform.gameObject.tag != "Grass")
+            if( hit.transform.gameObject.tag == "Grass")
+            {
+                initialTile = hit.transform.gameObject;
+                List<List<GameObject>> chosenGrids = decideGrid(constructionSize, hit.transform.gameObject.GetComponent<Ground>().index);
+                coloredTiles = new List<SpriteRenderer>();
+                constructableTileCount = chosenGrids[0].Count;
+
+                foreach (GameObject tile in chosenGrids[0])
+                {
+                    tile.GetComponent<SpriteRenderer>().color = Color.blue;
+                    coloredTiles.Add(tile.GetComponent<SpriteRenderer>());
+                }
+                foreach (GameObject tile in chosenGrids[1])
+                {
+                    tile.GetComponent<SpriteRenderer>().color = Color.red;
+                    coloredTiles.Add(tile.GetComponent<SpriteRenderer>());
+                }
+            }
+            else
             {
                 IEnumerator coroutine = Warning(hit.transform.GetChild(0).GetComponent<SpriteRenderer>());
                 StartCoroutine(coroutine);
+                constructableTileCount = 0;
                 return;
             }
-            initialTile = hit.transform.gameObject;
-            List<List<GameObject>> chosenGrids = decideGrid(constructionSize, hit.transform.gameObject.GetComponent<Ground>().index);
-            coloredTiles = new List<SpriteRenderer>();
-            constructableTileCount = chosenGrids[0].Count;
 
-            foreach ( GameObject tile in chosenGrids[0])
-            {
-                tile.GetComponent<SpriteRenderer>().color = Color.blue;
-                coloredTiles.Add(tile.GetComponent<SpriteRenderer>());
-            }
-            foreach (GameObject tile in chosenGrids[1])
-            {
-                tile.GetComponent<SpriteRenderer>().color = Color.red;
-                coloredTiles.Add(tile.GetComponent<SpriteRenderer>());
-            }
+        }
+        else
+        {
+            constructableTileCount = 0;
         }
         
     }
     public void OnEndDrag(PointerEventData eventData)
     {
         List<GameObject> chosenGrids = getGrid(constructionSize, initialTile.GetComponent<Ground>().index);
-
+        
         if (constructableTileCount == constructionSize.x * constructionSize.y)
         {
             foreach( GameObject tile in chosenGrids )
@@ -82,11 +91,9 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
 
             GameObject tmp = Instantiate(building, initialTile.transform.position, initialTile.transform.rotation);
             tmp.GetComponent<Building>().downLeftTileIndex = initialTile.GetComponent<Ground>().index;
-
-
         }
-        else
-        {
+        else if( constructableTileCount > 0)
+        {   
             foreach (GameObject tile in chosenGrids)
             {
                 tile.GetComponent<Ground>().StartCoroutine("FlashWarning");
