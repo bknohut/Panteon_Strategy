@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Barracks : Building
-{
-    public int a;
+{   
+    private Vector2 spawnAreaLimits;
 	// Use this for initialization
 	protected override void Start ()
     {
         base.Start();
         splash = transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
+        spawnAreaLimits.x = 6;
+        spawnAreaLimits.y = 6;
+
+        buildingName = "BARRACKS";
     }
     protected override void OnMouseDown()
     {
@@ -17,70 +21,104 @@ public class Barracks : Building
 
         spawn.gameObject.SetActive(true);
         spawn.GetComponent<SpawnButton>().spawnerBarracks = transform.gameObject;
-
-        buildingName.text = "BARRACKS";
     }
     public GameObject getSpawnLocation()
     {
         Vector2 spawnpoint = downLeftTileIndex;
-        GameObject[,] tileMap = GameManager.instance.tilemap;
-
+        GameObject[,] tileMap = TileManager.instance.tilemap;
+        GameObject firstUnitTile = null;
+        bool unitFound = false;
         //first candidate grid
         spawnpoint.x--;
         spawnpoint.y--;
-
-        for( int i = (int)spawnpoint.x; i < (int)spawnpoint.x + 6; i++ )
+        // check for an empty grid around the barracks
+        for( int i = (int)spawnpoint.x; i < (int)spawnpoint.x + spawnAreaLimits.x; i++ )
         {
             int j = (int)spawnpoint.y;
             if ( isGridAvailable(i, j) )
             {
-                if( tileMap[i, j].GetComponent<Ground>().isFree)
+                if (!tileMap[i, j].GetComponent<Ground>().isOccupied)
                 {
                     return tileMap[i, j];
                 }
             }
+            if(!unitFound && tileMap[i, j].GetComponent<Ground>().hasUnit)
+            {
+                firstUnitTile = tileMap[i, j];
+                unitFound = true;
+            }
         }
         spawnpoint.x += 5;
-        for( int j = (int)spawnpoint.y; j < (int)spawnpoint.y + 6; j++ )
+        for( int j = (int)spawnpoint.y; j < (int)spawnpoint.y + spawnAreaLimits.y; j++ )
         {
             int i = (int)spawnpoint.x;
             if (isGridAvailable(i, j))
             {
-                if (tileMap[i, j].GetComponent<Ground>().isFree)
+                if (!tileMap[i, j].GetComponent<Ground>().isOccupied)
                 {
                     return tileMap[i, j];
                 }
             }
+            if (!unitFound && tileMap[i, j].GetComponent<Ground>().hasUnit)
+            {
+                firstUnitTile = tileMap[i, j];
+                unitFound = true;
+            }
         }
         spawnpoint.y += 5;
-        for (int i = (int)spawnpoint.x; i > (int)spawnpoint.x - 6; i--)
+        for (int i = (int)spawnpoint.x; i > (int)spawnpoint.x - spawnAreaLimits.x; i--)
         {
             int j = (int)spawnpoint.y;
             if (isGridAvailable(i, j))
             {
-                if (tileMap[i, j].GetComponent<Ground>().isFree)
+                if (!tileMap[i, j].GetComponent<Ground>().isOccupied)
                 {
                     return tileMap[i, j];
                 }
             }
+            if (!unitFound && tileMap[i, j].GetComponent<Ground>().hasUnit)
+            {
+                firstUnitTile = tileMap[i, j];
+                unitFound = true;
+            }
         }
         spawnpoint.x -= 5;
-        for (int j = (int)spawnpoint.y; j > (int)spawnpoint.y - 6; j--)
+        for (int j = (int)spawnpoint.y; j > (int)spawnpoint.y - spawnAreaLimits.y; j--)
         {
             int i = (int)spawnpoint.x;
             if (isGridAvailable(i, j))
             {
-                if (tileMap[i, j].GetComponent<Ground>().isFree)
+                if (!tileMap[i, j].GetComponent<Ground>().isOccupied)
                 {
                     return tileMap[i, j];
                 }
             }
+            if (!unitFound && tileMap[i, j].GetComponent<Ground>().hasUnit)
+            {
+                firstUnitTile = tileMap[i, j];
+                unitFound = true;
+            }
         }
+
+        // if all the grids are full level up the first tank found
+        if( unitFound )
+        {
+            Vector2 unitIndex = firstUnitTile.transform.GetComponent<Ground>().index;
+            tileMap[(int)unitIndex.x, (int)unitIndex.y].transform.GetChild(0).GetComponent<Unit>().LevelUp(1);
+        }
+        // no possible spawn location
+        else
+        {
+            IEnumerator coroutine = Warning(transform.GetChild(0).GetComponent<SpriteRenderer>());
+            StartCoroutine(coroutine);
+        }
+
         return null;
+        
     }
     private bool isGridAvailable(int i, int j)
     {
-        if (i >= GameManager.instance.gridWidth || j >= GameManager.instance.gridHeight)
+        if (i >= TileManager.instance.gridWidth || j >= TileManager.instance.gridHeight)
         {
             return false;
         }
@@ -90,5 +128,5 @@ public class Barracks : Building
         }
         return true;
     }
-
+    
 }

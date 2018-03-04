@@ -2,19 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerPlant : Building
+public class Tank : Unit
 {
-
-    // Use this for initialization
     protected override void Start()
     {
         base.Start();
         splash = transform.GetChild(0).GetComponent<SpriteRenderer>().sprite;
-        buildingName = "POWER PLANT";
-    }
-    protected override void OnMouseDown()
-    {
-        base.OnMouseDown();
-        spawn.gameObject.SetActive(false);
+        unitName = "TANK";
     }
 }

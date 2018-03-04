@@ -47,7 +47,7 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
         {
             if( hit.transform.gameObject.tag != "Grass")
             {
-                IEnumerator coroutine = BuildingWarning(hit.transform.GetChild(0).GetComponent<SpriteRenderer>());
+                IEnumerator coroutine = Warning(hit.transform.GetChild(0).GetComponent<SpriteRenderer>());
                 StartCoroutine(coroutine);
                 return;
             }
@@ -77,7 +77,7 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
         {
             foreach( GameObject tile in chosenGrids )
             {
-                tile.GetComponent<Ground>().isFree = false;
+                tile.GetComponent<Ground>().isOccupied = true;
             }
 
             GameObject tmp = Instantiate(building, initialTile.transform.position, initialTile.transform.rotation);
@@ -124,14 +124,14 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
                     continue;
                 }
                 // select
-                if( GameManager.instance.tilemap[i,j].GetComponent<Ground>().isFree )
+                if( !TileManager.instance.tilemap[i,j].GetComponent<Ground>().isOccupied )
                 {
-                    result[0].Add(GameManager.instance.tilemap[i, j]);
+                    result[0].Add(TileManager.instance.tilemap[i, j]);
                 }
                 // reject
                 else
                 {
-                    result[1].Add(GameManager.instance.tilemap[i, j]);
+                    result[1].Add(TileManager.instance.tilemap[i, j]);
                 }
             }
         }
@@ -149,7 +149,7 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
                 {
                     continue;
                 }
-                result.Add(GameManager.instance.tilemap[i, j]);
+                result.Add(TileManager.instance.tilemap[i, j]);
             }
         }
         return result;
@@ -158,7 +158,7 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     private bool isGridAvailable( int i, int j )
     {   
-        if ( i >= GameManager.instance.gridWidth || j >= GameManager.instance.gridHeight )
+        if ( i >= TileManager.instance.gridWidth || j >= TileManager.instance.gridHeight )
         {
             return false;
         }
@@ -169,7 +169,7 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
         return true;
     }
 
-    IEnumerator BuildingWarning( SpriteRenderer spriteRenderer)
+    IEnumerator Warning( SpriteRenderer spriteRenderer)
     {
         for (int i = 0; i < 2; i++)
         {

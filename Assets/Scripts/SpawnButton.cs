@@ -11,11 +11,15 @@ public class SpawnButton : MonoBehaviour
     {
         GameObject spawnLocation = spawnerBarracks.GetComponent<Barracks>().getSpawnLocation();
         if( spawnLocation == null )
-        {
+        {   
             return;
         }
-        Instantiate(tank, spawnLocation.transform.position, spawnLocation.transform.rotation);
-        spawnLocation.GetComponent<Ground>().isFree = false;
+        GameObject tmpTank = Instantiate(tank, spawnLocation.transform.position, spawnLocation.transform.rotation);
+        tmpTank.transform.SetParent(spawnLocation.transform);
+        tmpTank.GetComponent<Tank>().index = spawnLocation.GetComponent<Ground>().index;
+
+        spawnLocation.GetComponent<Ground>().isOccupied = true;
+        spawnLocation.GetComponent<Ground>().hasUnit = true;
     }
 
 }
