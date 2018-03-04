@@ -24,7 +24,7 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
     {
         coloredTiles = new List<SpriteRenderer>();
     }
-
+    // Drag handlers
     public void OnBeginDrag(PointerEventData eventData)
     {
         draggedObject = gameObject;
@@ -32,39 +32,49 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
         initialParent = transform.parent;
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
-  
     public void OnDrag(PointerEventData eventData)
     {   
+        // raycast to mouse position
         transform.position = Input.mousePosition;
         RaycastHit hit = new RaycastHit();
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        
+        //clear the colored tiles from last drag
         foreach (SpriteRenderer spriteRenderer in coloredTiles)
         {
             spriteRenderer.color = Color.white;
         }
-
+        //hit
         if (Physics.Raycast(ray, out hit))
-        {
+        {   
+            // if ray hits the grid
             if( hit.transform.gameObject.tag == "Grass")
-            {
+            {   
+                // get the downleft tile 
                 initialTile = hit.transform.gameObject;
+                // get the grid to color
                 List<List<GameObject>> chosenGrids = decideGrid(constructionSize, hit.transform.gameObject.GetComponent<Ground>().index);
                 coloredTiles = new List<SpriteRenderer>();
+                // selection grid
                 constructableTileCount = chosenGrids[0].Count;
 
+                // no obstacle on construction site
                 foreach (GameObject tile in chosenGrids[0])
                 {
                     tile.GetComponent<SpriteRenderer>().color = Color.blue;
                     coloredTiles.Add(tile.GetComponent<SpriteRenderer>());
                 }
+                // obstacle on construction site
                 foreach (GameObject tile in chosenGrids[1])
                 {
                     tile.GetComponent<SpriteRenderer>().color = Color.red;
                     coloredTiles.Add(tile.GetComponent<SpriteRenderer>());
                 }
             }
+            // ray hits obstacle
             else
-            {
+            {   
+                // flash the area
                 IEnumerator coroutine = Warning(hit.transform.GetChild(0).GetComponent<SpriteRenderer>());
                 StartCoroutine(coroutine);
                 constructableTileCount = 0;
@@ -72,6 +82,7 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
             }
 
         }
+        // no hit
         else
         {
             constructableTileCount = 0;
@@ -81,17 +92,18 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
     public void OnEndDrag(PointerEventData eventData)
     {
         List<GameObject> chosenGrids = getGrid(constructionSize, initialTile.GetComponent<Ground>().index);
-        
+        // if the selected grid is the same size with the building area
         if (constructableTileCount == constructionSize.x * constructionSize.y)
         {
             foreach( GameObject tile in chosenGrids )
             {
                 tile.GetComponent<Ground>().isOccupied = true;
             }
-
+            // put bulding on location
             GameObject tmp = Instantiate(building, initialTile.transform.position, initialTile.transform.rotation);
             tmp.GetComponent<Building>().downLeftTileIndex = initialTile.GetComponent<Ground>().index;
         }
+        // not a suitable location
         else if( constructableTileCount > 0)
         {   
             foreach (GameObject tile in chosenGrids)
@@ -99,12 +111,13 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
                 tile.GetComponent<Ground>().StartCoroutine("FlashWarning");
             }
         }
+        // reset the chosen grid color
         foreach (SpriteRenderer spriteRenderer in coloredTiles)
         {
             spriteRenderer.color = Color.white;
         }
-
-
+        
+        // reset the dragged object
         draggedObject = null;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         
@@ -115,7 +128,7 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
         }
         
     }
-
+    // get grid to place object
     private List<List<GameObject>> decideGrid( Vector2 size, Vector2 tileLocation )
     {
         List<List<GameObject>> result = new List<List<GameObject>>();
@@ -161,8 +174,8 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
         }
         return result;
     }
-
-
+    
+    // check if tile in the grid
     private bool isGridAvailable( int i, int j )
     {   
         if ( i >= TileManager.instance.gridWidth || j >= TileManager.instance.gridHeight )
@@ -175,7 +188,7 @@ public class BuildingProduction : MonoBehaviour, IBeginDragHandler, IDragHandler
         }
         return true;
     }
-
+    // flash warning
     IEnumerator Warning( SpriteRenderer spriteRenderer)
     {
         for (int i = 0; i < 2; i++)

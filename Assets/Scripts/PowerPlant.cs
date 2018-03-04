@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PowerPlant : Building
 {
-
     // Use this for initialization
     protected override void Start()
     {

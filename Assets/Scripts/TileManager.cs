@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class TileManager : MonoBehaviour
 {
-
     public static TileManager instance;
     public GameObject[,] tilemap;
     public GameObject tiles;
     public GameObject tile;
 
+    // grid size
     public int gridHeight = 15;
     public int gridWidth = 15;
 
@@ -26,6 +26,8 @@ public class TileManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(this.gameObject);
+
+        // generate grid
         tilemap = new GameObject[15,15];
         tilePos = new Vector3( -4.814f, 2.627f, 0f);
 

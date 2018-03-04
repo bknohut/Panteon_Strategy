@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// a* algorithm with priority queue improvement
 public class PathFinding : MonoBehaviour
 {
-
     public Transform player;
     public Vector2 targetIndex;
     public bool hasTarget;
@@ -18,41 +17,46 @@ public class PathFinding : MonoBehaviour
         player = null;
     }
     private void Update()
-    {
+    {   
+        // works when both the source and the destination is set
         if (player != null && hasTarget == true)
         {
             List<Ground> path = FindPath(player.GetComponent<Tank>().index, targetIndex);
             if( path != null )
-            {
+            {   
+                // set the path of the unit
                 player.gameObject.GetComponent<Unit>().MoveOnNewPath(path);
             }
-            
-
+            // reset the variables
             player = null;
             hasTarget = false;
         }
     }
     private List<Ground> FindPath( Vector2 startIndex, Vector2 targetIndex)
     {
+        // get the source & destination tile
         Ground source = GetTileFromIndex(startIndex);
         Ground destination = GetTileFromIndex(targetIndex);
-
+        // set the heap
         PriorityQ<Ground> openSet = new PriorityQ<Ground>(tilemap.GetLength(0) * tilemap.GetLength(1)) ;
         HashSet<Ground> closedSet = new HashSet<Ground>();
 
         openSet.Add(source);
-
+        
         while(openSet.getSize() > 0 )
         {
             Ground current = openSet.ExtractFirstItem();
             closedSet.Add(current);
             
+            // end
             if( current == destination )
             {
                 return GetPath(source, destination);
             }
+            // examine each neighbour
             foreach(Ground neighbourTile in GetNeighbourTiles( current ))
-            {
+            {   
+                // tile is occupied
                 if (neighbourTile != destination )
                 {
                     if (neighbourTile.isOccupied == true || closedSet.Contains(neighbourTile))
@@ -60,6 +64,7 @@ public class PathFinding : MonoBehaviour
                         continue;
                     }
                 }
+                // destination tile is occupied by a building
                 else
                 {
                     if( neighbourTile.hasUnit == false && neighbourTile.isOccupied == true || closedSet.Contains(neighbourTile))
@@ -67,6 +72,7 @@ public class PathFinding : MonoBehaviour
                         continue;
                     }
                 }
+                // get the neighbout tile having the least cost
                 int movementCost = current.gCost + GetDistance(current, neighbourTile);
                 if( movementCost < neighbourTile.gCost || !openSet.IsItemInQ(neighbourTile))
                 {
@@ -89,10 +95,12 @@ public class PathFinding : MonoBehaviour
         }
         return null;
     }
+    // retrieve the tile from the grid
     private Ground GetTileFromIndex(Vector2 index)
     {
         return tilemap[(int)index.x, (int)index.y].GetComponent<Ground>();
     }
+    // check grid to retrieve the neighbour tiles
     private List<Ground> GetNeighbourTiles(Ground currentTile)
     {
 
@@ -118,6 +126,7 @@ public class PathFinding : MonoBehaviour
         }
         return neighbours;
     }
+    // compute distance between tiles
     private int GetDistance(Ground currentTile, Ground nextTile)
     {   
         int xDistance = Mathf.Abs((int)currentTile.index.x - (int)nextTile.index.x);
@@ -129,6 +138,7 @@ public class PathFinding : MonoBehaviour
         }
         return 14 * xDistance + 10 * ( yDistance - xDistance);
     }
+    // return the final path using parent relations
     private List<Ground> GetPath(Ground sourceTile, Ground destinationTile)
     {
         List<Ground> path = new List<Ground>();
@@ -142,12 +152,5 @@ public class PathFinding : MonoBehaviour
         path.Reverse();
         return path;
     }
-    private bool CheckDestinationCollusion(Ground destinationTile)
-    {
-        if( destinationTile.isOccupied == true && destinationTile.hasUnit == true)
-        {
-            return true;
-        }
-        return false;
-    }
+
 }

@@ -15,13 +15,18 @@ public class Barracks : Building
 
         buildingName = "BARRACKS";
     }
+    // on left click
     protected override void OnMouseDown()
     {
         base.OnMouseDown();
-
+        // button active
         spawn.gameObject.SetActive(true);
         spawn.GetComponent<SpawnButton>().spawnerBarracks = transform.gameObject;
     }
+    // get the unit spawn location
+    // location is determined to be around the building at the first available tile
+    // if all the tiles are occupied, it returns empty
+    // if all the tiles empty it upgrades the first unit found by one
     public GameObject getSpawnLocation()
     {
         Vector2 spawnpoint = downLeftTileIndex;
@@ -116,6 +121,7 @@ public class Barracks : Building
         return null;
         
     }
+    // check tile if on grid
     private bool isGridAvailable(int i, int j)
     {
         if (i >= TileManager.instance.gridWidth || j >= TileManager.instance.gridHeight)

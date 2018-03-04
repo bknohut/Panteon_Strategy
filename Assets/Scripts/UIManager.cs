@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// get UI elements
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;

@@ -10,7 +10,7 @@ public class Ground : MonoBehaviour, IPQItem<Ground>
     public bool hasUnit = false;
      
     public Ground parentTile;
-
+    // a* costs
     public int gCost;
     public int hCost;
     public int fCost
@@ -20,9 +20,9 @@ public class Ground : MonoBehaviour, IPQItem<Ground>
             return gCost + hCost;
         }
     }
-
+    // heap 
     private int priorityQIndex;
-
+    // set as the destination
     protected void OnMouseOver()
     {
         // rightclick
@@ -32,6 +32,7 @@ public class Ground : MonoBehaviour, IPQItem<Ground>
             GameManager.instance.HandleMovement();
         }
     }
+    // Flash warning
     IEnumerator FlashWarning()
     {   
         for( int i = 0; i < 5; i++)
@@ -44,7 +45,7 @@ public class Ground : MonoBehaviour, IPQItem<Ground>
         transform.GetComponent<SpriteRenderer>().color = Color.white;
 
     }
-
+    // Interface 
     public int QIndex
     {
         get

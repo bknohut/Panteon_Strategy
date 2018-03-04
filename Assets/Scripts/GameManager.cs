@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
     }
-
+    // set the route
     public void HandleMovement()
     {
         aStar.GetComponent<PathFinding>().player = sourceUnit;

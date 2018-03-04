@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+// Heap class used in a*
+
 public class PriorityQ<T> where T : IPQItem<T>
 {
     T[] items;
     int itemCount;
-
+    // constructor
     public PriorityQ(int size)
     {
         items = new T[size];
     }
+    // add item
     public void Add( T item )
     {
         item.QIndex = itemCount;
@@ -19,6 +22,7 @@ public class PriorityQ<T> where T : IPQItem<T>
         SortUp(item);
         itemCount++;
     }
+    // set high prioriy
     private void SortUp( T item )
     {
         int parentIndex = (item.QIndex - 1) / 2;
@@ -36,6 +40,7 @@ public class PriorityQ<T> where T : IPQItem<T>
             parentIndex = (item.QIndex - 1) / 2;
         }
     }
+    // set low priority
     private void SortDown( T item )
     {
         while( true)
@@ -69,7 +74,7 @@ public class PriorityQ<T> where T : IPQItem<T>
             }
         }
     }
-
+    // swap
     private void SwapItems( T first, T second )
     {
         items[first.QIndex] = second;
@@ -79,6 +84,7 @@ public class PriorityQ<T> where T : IPQItem<T>
         second.QIndex = firstIndex;
 
     }
+    // get min
     public T ExtractFirstItem()
     {
         T item = items[0];
@@ -88,19 +94,23 @@ public class PriorityQ<T> where T : IPQItem<T>
         SortDown(items[0]);
         return item;
     }
+    // check if an item in the heap
     public bool IsItemInQ( T item )
     {
         return Equals(items[item.QIndex], item);
     }
+    // return size
     public int getSize()
     {
         return itemCount;
     }
+    // update is called when the item priority gets lower
     public void Update( T item )
     {
         SortUp(item);
     }
 }
+// interface
 public interface IPQItem<T> : IComparable<T>
 {
     int QIndex
