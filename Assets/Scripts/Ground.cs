@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Ground : MonoBehaviour
+public class Ground : MonoBehaviour, IPQItem<Ground>
 {
     public Vector2 index;
     public bool isOccupied = false;
     public bool hasUnit = false;
      
-    public GameObject parentTile;
+    public Ground parentTile;
 
     public int gCost;
     public int hCost;
@@ -20,6 +20,8 @@ public class Ground : MonoBehaviour
             return gCost + hCost;
         }
     }
+
+    private int priorityQIndex;
 
     protected void OnMouseOver()
     {
@@ -43,4 +45,24 @@ public class Ground : MonoBehaviour
 
     }
 
+    public int QIndex
+    {
+        get
+        {
+            return priorityQIndex;
+        }
+        set
+        {
+            priorityQIndex = value;
+        }
+    }
+    public int CompareTo( Ground tile )
+    {
+        int compared = fCost.CompareTo(tile.fCost);
+        if( compared == 0)
+        {
+            compared = hCost.CompareTo(tile.hCost);
+        }
+        return -1 * compared;
+    }
 }

@@ -292,6 +292,7 @@
     <Compile Include="Assets\Scripts\InfiniteScrollBar.cs" />
     <Compile Include="Assets\Scripts\PowerPlant.cs" />
     <Compile Include="Assets\Scripts\PowerplantProduction.cs" />
+    <Compile Include="Assets\Scripts\PriorityQ.cs" />
     <Compile Include="Assets\Scripts\SpawnButton.cs" />
     <Compile Include="Assets\Scripts\Tank.cs" />
     <Compile Include="Assets\Scripts\TileManager.cs" />

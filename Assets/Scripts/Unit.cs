@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Unit : MonoBehaviour {
 
     public Vector2 index;
-    public List<GameObject> path;
+    public List<Ground> path;
     public int level;
 
     protected float speed = 0.04f;
@@ -19,13 +19,14 @@ public class Unit : MonoBehaviour {
 
     protected virtual void Start()
     {
-        path = new List<GameObject>();
+        path = new List<Ground>();
         level = 1;
 
         information = UIManager.instance.informationImage;
         nameArea = UIManager.instance.informationText;
         spawn = UIManager.instance.spawn;
         status = UIManager.instance.status;
+        
     }
 
     // Mouse clicks
@@ -67,7 +68,7 @@ public class Unit : MonoBehaviour {
         StartCoroutine(coroutine);
     }
     //Movement handlers
-    public void MoveOnNewPath(List<GameObject> newPath)
+    public void MoveOnNewPath(List<Ground> newPath)
     {   
         if( newPath != path || newPath != null)
         {
@@ -89,8 +90,8 @@ public class Unit : MonoBehaviour {
         {
             if( (Vector2) transform.position == currentPosition)
             {   
-                path[currentIndex].GetComponent<Ground>().isOccupied = false;
-                path[currentIndex].GetComponent<Ground>().hasUnit = false;
+                path[currentIndex].isOccupied = false;
+                path[currentIndex].hasUnit = false;
                 transform.SetParent(null);
 
                 currentIndex++;
@@ -101,24 +102,25 @@ public class Unit : MonoBehaviour {
                         path[currentIndex - 1].transform.GetChild(0).GetComponent<Unit>().LevelUp(level);
                         Destroy(gameObject);
                     }
-                    path[currentIndex-1].GetComponent<Ground>().isOccupied = true;
-                    path[currentIndex-1].GetComponent<Ground>().hasUnit = true;
+                    path[currentIndex-1].isOccupied = true;
+                    path[currentIndex-1].hasUnit = true;
                     transform.SetParent(path[currentIndex - 1].transform);
                     yield break;
                 }
 
                 currentPosition = path[currentIndex].transform.position;
 
-                path[currentIndex].GetComponent<Ground>().isOccupied = true;
-                path[currentIndex].GetComponent<Ground>().hasUnit = true;
+                path[currentIndex].isOccupied = true;
+                path[currentIndex].hasUnit = true;
                 transform.SetParent(path[currentIndex].transform);
 
-                index = path[currentIndex].GetComponent<Ground>().index;
+                index = path[currentIndex].index;
             }
             transform.position = Vector3.MoveTowards(transform.position, currentPosition, speed);
             yield return null;
         }
     }
+    //status text
     IEnumerator UpdateStatus( int level )
     {
         status.text = unitName + " leveled up by " + level;
